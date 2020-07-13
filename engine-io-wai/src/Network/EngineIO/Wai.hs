@@ -34,7 +34,7 @@ import qualified Network.WebSockets             as WS
 
 newtype WaiMonad a = WaiMonad {
     runWaiMonad :: ExceptT Response (ReaderT Request IO) a
-    } deriving (Monad, Functor, Applicative, MonadReader Request, MonadError Response, MonadIO)
+    } deriving (Monad, Functor, Applicative, MonadReader Request, MonadError Response, MonadIO, MonadUnliftIO)
 
 
 toWaiApplication :: WaiMonad a -> Application
