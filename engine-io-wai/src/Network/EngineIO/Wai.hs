@@ -21,6 +21,7 @@ import           Data.ByteString.Lazy           (toStrict)
 import           Data.Maybe                     (maybeToList)
 import           Network.HTTP.Types.Header      (hContentType)
 import           Network.Wai
+import           UnliftIO                       (MonadUnliftIO)
 
 
 import qualified Data.ByteString                as BS
