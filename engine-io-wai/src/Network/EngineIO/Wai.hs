@@ -1,7 +1,8 @@
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
-
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DerivingVia #-}
 
 module Network.EngineIO.Wai (
     WaiMonad (..),
@@ -34,7 +35,8 @@ import qualified Network.WebSockets             as WS
 
 newtype WaiMonad a = WaiMonad {
     runWaiMonad :: ExceptT Response (ReaderT Request IO) a
-    } deriving (Monad, Functor, Applicative, MonadReader Request, MonadError Response, MonadIO, MonadUnliftIO)
+    }
+    deriving newtype (Monad, Functor, Applicative, MonadReader Request, MonadError Response, MonadIO, MonadUnliftIO)
 
 
 toWaiApplication :: WaiMonad a -> Application
