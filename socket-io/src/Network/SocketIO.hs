@@ -1,3 +1,4 @@
+{-# LANGUAGE AllowAmbiguousTypes #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -63,6 +64,7 @@ import Data.Ord (comparing)
 
 import qualified Control.Concurrent.STM as STM
 import qualified Data.Aeson as Aeson
+import qualified Data.Aeson.Parser as AesonParser
 import qualified Data.Attoparsec.ByteString as Attoparsec
 import qualified Data.Attoparsec.ByteString.Char8 as AttoparsecC8
 import qualified Data.ByteString.Builder as Builder
@@ -123,7 +125,7 @@ parsePacket = do
 
   pIdStr <- (Just <$> numberStr) <|> pure Nothing
 
-  Packet t attachments namespace pIdStr <$> ((Just <$> Aeson.json) <|> pure Nothing)
+  Packet t attachments namespace pIdStr <$> ((Just <$> AesonParser.json) <|> pure Nothing)
 
   where
 
@@ -254,7 +256,7 @@ onJSON eventName handler =
 class OnArgs a r | a -> r where
   parseArgs :: Aeson.Array -> a -> Maybe r
 
-instance OnArgs a a where
+instance OnArgs (EventHandler a) (EventHandler a) where
   parseArgs v m
     | V.null v = Just m
     | otherwise = Nothing

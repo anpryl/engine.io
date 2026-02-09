@@ -24,6 +24,7 @@ library
   build-depends:
     aeson >=0.7 && <1.6,
     attoparsec >=0.10 && <0.14,
+    attoparsec-aeson,
     base >=4.6 && <4.15,
     bytestring >=0.10 && <0.12,
     engine-io >= 1 && <1.3,
